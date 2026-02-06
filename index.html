@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Trivial Cofrade</title>
+
+<style>
+ body {
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  background:
+    linear-gradient(rgba(255, 255, 255, 0.5), rgba(0,0,0,0.5)),
+    url("fondo.png") no-repeat center center fixed;
+  background-size: cover;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+  .container {
+    width: 90%;
+    max-width: 700px;
+    background: rgba(255, 255, 255, 0.3);
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+  }
+
+  h1 {
+    margin-bottom: 10px;
+  }
+
+  button {
+    background: #00eaff;
+    border: none;
+    padding: 15px;
+    margin: 10px;
+    width: 100%;
+    font-size: 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 0.2s;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  .answers {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+
+  .timer {
+    font-size: 24px;
+    margin-bottom: 10px;
+  }
+
+  .score {
+    margin-top: 10px;
+  }
+</style>
+</head>
+<body>
+
+<div class="container" id="app">
+  <h1>Trivial Cofrade ✝️</h1>
+  <button onclick="startGame()">¡A ESTA EHHH!</button>
+</div>
+
+<script>
+const questions = [
+  {
+    question: "¿Qué paso consta de 2 llamadores?",
+    answers: ["La mortaja", "La trinidad", "La Sentencia", "Piedad del baratillo"],
+    correct: 1
+  },
+  {
+    question: "¿Qué representa la imagén con los ojos vendados del Sagrado Decreto  ?",
+    answers: ["La fé ciega", "La fé", "Creer sin ver", "Incredibilidad"],
+    correct: 0
+  },
+  {
+    question: "¿Cuántos Ciriales lleva la Hermandad de la Mortaja delante del paso?",
+    answers: ["20", "19", "18", "17"],
+    correct: 2
+  }
+
+];
+
+let current = 0;
+let score = 0;
+let time = 20;
+let timerInterval;
+
+function startGame() {
+  current = 0;
+  score = 0;
+  showQuestion();
+}
+
+function showQuestion() {
+  time = 15;
+  const q = questions[current];
+
+  document.getElementById("app").innerHTML = `
+    <div class="timer">⏱️ ${time}</div>
+    <h2>${q.question}</h2>
+    <div class="answers">
+      ${q.answers.map((a,i) =>
+        `<button onclick="checkAnswer(${i})">${a}</button>`
+      ).join("")}
+    </div>
+    <div class="score">Puntos: ${score}</div>
+  `;
+
+  timerInterval = setInterval(updateTimer, 1000);
+}
+
+function updateTimer() {
+  time--;
+  document.querySelector(".timer").innerHTML = `⏱️ ${time}`;
+
+  if (time <= 0) {
+    clearInterval(timerInterval);
+    nextQuestion();
+  }
+}
+
+function checkAnswer(index) {
+  clearInterval(timerInterval);
+
+  if (index === questions[current].correct) {
+    score += 100;
+  }
+
+  nextQuestion();
+}
+
+function nextQuestion() {
+  current++;
+  if (current < questions.length) {
+    showQuestion();
+  } else {
+    showResult();
+  }
+}
+
+function showResult() {
+  document.getElementById("app").innerHTML = `
+    <h1>🎉 Fin del juego</h1>
+    <h2>Puntuación: ${score}</h2>
+    <button onclick="startGame()">Jugar otra vez</button>
+  `;
+}
+</script>
+
+</body>
+</html>
