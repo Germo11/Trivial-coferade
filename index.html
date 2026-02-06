@@ -2,10 +2,10 @@
 <html lang="es">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Trivial Cofrade</title>
-
 <style>
- body {
+body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
   background:
@@ -15,53 +15,92 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-  .container {
-    width: 90%;
-    max-width: 700px;
-    background: rgba(255, 255, 255, 0.3);
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
+.container {
+  width: 90%;
+  max-width: 700px;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 15px;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+h1 {
+  margin-bottom: 10px;
+  font-size: 2em;
+}
+
+h2 {
+  font-size: 1.5em;
+}
+
+button {
+  background: #00eaff;
+  border: none;
+  padding: 15px;
+  margin: 10px 0;
+  width: 100%;
+  font-size: 18px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: 0.2s;
+  box-sizing: border-box;
+}
+
+button:hover {
+  transform: scale(1.05);
+}
+
+.answers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+  margin-top: 15px;
+}
+
+.timer {
+  font-size: 24px;
+  margin-bottom: 10px;
+}
+
+.score {
+  margin-top: 10px;
+  font-size: 18px;
+}
+
+/* MEDIA QUERIES PARA MÓVILES */
+@media (max-width: 600px) {
+  h1 {
+    font-size: 1.5em;
   }
 
-  h1 {
-    margin-bottom: 10px;
+  h2 {
+    font-size: 1.2em;
   }
 
   button {
-    background: #00eaff;
-    border: none;
-    padding: 15px;
-    margin: 10px;
-    width: 100%;
-    font-size: 18px;
-    border-radius: 10px;
-    cursor: pointer;
-    transition: 0.2s;
-  }
-
-  button:hover {
-    transform: scale(1.05);
+    font-size: 16px;
+    padding: 12px;
   }
 
   .answers {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 10px;
+    grid-template-columns: 1fr; /* Una columna en móvil */
+    gap: 8px;
   }
 
   .timer {
-    font-size: 24px;
-    margin-bottom: 10px;
+    font-size: 20px;
   }
 
   .score {
-    margin-top: 10px;
+    font-size: 16px;
   }
+}
 </style>
+<link rel="icon" type="imagen/png" href="favicon-32x32.png">
 </head>
 <body>
 
@@ -87,7 +126,6 @@ const questions = [
     answers: ["20", "19", "18", "17"],
     correct: 2
   }
-
 ];
 
 let current = 0;
@@ -159,3 +197,4 @@ function showResult() {
 
 </body>
 </html>
+
